@@ -1,0 +1,19 @@
+{
+  "global": {
+    "hello": "Namaste 🙏! I am Ann Dhan, your personal farming assistant. How can I help you?",
+    "thanks": "You're welcome! 🌱"
+  },
+  "wheat": {
+    "irrigation": "Irrigate wheat every 7–10 days, depending on soil moisture.",
+    "fertilizer": "Apply urea 20kg/acre at the tillering stage.",
+    "pest": "Check for aphids and stem rust. Consult me if you see a problem."
+  },
+  "tomato": {
+    "irrigation": "Irrigate tomato every 5–7 days, ensuring the soil is moist but not waterlogged.",
+    "pest": "Watch for fruit borer. If found, spray with neem oil."
+  },
+  "paddy": {
+    "irrigation": "Maintain standing water until the panicle initiation stage, then reduce.",
+    "fertilizer": "Use organic manure with recommended NPK doses from a soil test."
+  }
+}
