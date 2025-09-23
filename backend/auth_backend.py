@@ -5,6 +5,8 @@ import firebase_admin # 👈 Add this import
 from firebase_admin import credentials, auth, firestore # 👈 Add this import
 import bcrypt
 import json
+import google.generativeai as genai
+
 
 # Make sure you have loaded your environment variables (e.g., from .env)
 # from dotenv import load_dotenv
@@ -69,6 +71,47 @@ def handle_auth():
     except Exception as e:
         print(f"Auth error: {e}")
         return jsonify({'message': 'Authentication failed'}), 500
+    
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
+model = genai.GenerativeModel('gemini-pro')
+
+SYSTEM_PROMPT = """
+You are Ann Dhan, a helpful Indian agriculture assistant for smallholder farmers.
+Be concise, practical and give one clear immediate action the farmer can take.
+Answer in the requested language. If the user asked about a crop, tailor advice for that crop.
+"""
+
+@app.route("/api/chat", methods=["POST"])
+def chat():
+    data = request.json
+    q = data.get("question", "")
+    crop = data.get("crop", "")
+    history = data.get("history", [])
+
+    # Format conversation history for the prompt
+    history_string = ""
+    for msg in history:
+        role = "Farmer" if msg['from'] == 'user' else "Ann Dhan"
+        history_string += f"{role}: {msg['text']}\n"
+
+    final_prompt = f"""
+    {SYSTEM_PROMPT}
+    
+    Conversation History:
+    {history_string}
+
+    Farmer's Crop: {crop}
+    New Question: {q}
+    """
+
+    try:
+        response = model.generate_content(final_prompt)
+        answer = response.text
+        return jsonify({"answer": answer})
+    except Exception as e:
+        print(f"Gemini API error: {e}")
+        return jsonify({"answer": "An error occurred with the AI."}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
