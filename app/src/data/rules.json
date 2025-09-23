@@ -1,19 +1,48 @@
 {
   "global": {
-    "hello": "Namaste 🙏! I am Ann Dhan, your personal farming assistant. How can I help you?",
-    "thanks": "You're welcome! 🌱"
+    "hello": "Namaste 🙏! I am Ann Dhan, your personal farming assistant for Kerala. How can I help you?",
+    "thanks": "You're welcome! 🌱 Wishing you healthy crops and good harvests."
   },
+
   "wheat": {
-    "irrigation": "Irrigate wheat every 7–10 days, depending on soil moisture.",
-    "fertilizer": "Apply urea 20kg/acre at the tillering stage.",
-    "pest": "Check for aphids and stem rust. Consult me if you see a problem."
+    "irrigation": "Irrigate wheat every 7–10 days depending on soil moisture. Ensure critical irrigation at crown root initiation, tillering, and grain filling stages.",
+    "fertilizer": "Apply 20kg urea/acre at tillering stage. Use 40kg DAP and 20kg MOP/acre at sowing if soil test is not available.",
+    "pest": "Common pests are aphids and stem rust. Spray neem oil 3% or recommended fungicide if infestation is severe."
   },
+
   "tomato": {
-    "irrigation": "Irrigate tomato every 5–7 days, ensuring the soil is moist but not waterlogged.",
-    "pest": "Watch for fruit borer. If found, spray with neem oil."
+    "irrigation": "Irrigate tomato every 5–7 days. Avoid waterlogging; use drip irrigation if possible for better yield.",
+    "fertilizer": "Apply 10 tons of farmyard manure per acre before planting. Use 75:40:25 NPK kg/acre in split doses for best results.",
+    "pest": "Major pests include fruit borer and leaf curl. For fruit borer, spray neem oil 5ml/litre or use pheromone traps. For leaf curl, manage whiteflies with yellow sticky traps."
   },
+
   "paddy": {
-    "irrigation": "Maintain standing water until the panicle initiation stage, then reduce.",
-    "fertilizer": "Use organic manure with recommended NPK doses from a soil test."
+    "irrigation": "Maintain 2–5 cm standing water till panicle initiation. Reduce water during grain ripening to avoid lodging.",
+    "fertilizer": "Apply 10–12 tons of green manure or FYM per acre. Use 50:25:25 NPK kg/acre in three splits (basal, tillering, panicle initiation).",
+    "pest": "Watch for brown planthopper, stem borer, and leaf folder. Apply tricho-cards or neem extract first. Use chemical sprays only if infestation is high."
+  },
+
+  "coconut": {
+    "irrigation": "Irrigate coconut palms once in 7–10 days in summer. Mulching with dry leaves and husk conserves moisture.",
+    "fertilizer": "Apply 500g urea, 320g SSP, and 1200g MOP per palm per year in two splits. Supplement with organic manure (20–25kg).",
+    "pest": "Control rhinoceros beetle with neem cake in the crown. Use pheromone traps for red palm weevil. Regularly clean crown area."
+  },
+
+  "banana": {
+    "irrigation": "Irrigate banana every 5–8 days in summer. Drip irrigation is highly recommended for uniform growth.",
+    "fertilizer": "Apply 20kg FYM per pit at planting. Use 200:60:200 NPK g/plant in 3–4 splits along with micronutrients.",
+    "pest": "Watch for banana stem borer and bunchy top virus. Remove affected plants and control aphids (virus carriers) using neem spray."
+  },
+
+  "black_pepper": {
+    "irrigation": "Irrigate vines once in 7–10 days during dry months. Mulching helps conserve moisture.",
+    "fertilizer": "Apply 10kg compost or cattle manure per vine yearly. Supplement with 50:50:150 NPK g/vine in two splits.",
+    "pest": "Common problems: quick wilt and pollu beetle. Use Trichoderma mixed with neem cake for wilt. Spray neem oil against beetles."
+  },
+
+  "rubber": {
+    "irrigation": "Rubber usually grows under rain-fed conditions. Irrigation may be given in nurseries or young plantations in summer.",
+    "fertilizer": "Apply 12:6:6 NPK mixture at 225g/tree every 6 months for immature trees. Add organic manure annually.",
+    "pest": "Leaf fall disease is common. Use Bordeaux mixture or copper fungicides as preventive spray before monsoon."
   }
 }
