@@ -1,6 +1,8 @@
 import os
-from firebase_admin import credentials, auth, firestore
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
+import firebase_admin # 👈 Add this import
+from firebase_admin import credentials, auth, firestore # 👈 Add this import
 import bcrypt
 import json
 
