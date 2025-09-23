@@ -2,6 +2,7 @@ import os
 from firebase_admin import credentials, auth, firestore
 from flask import Flask, request, jsonify
 import bcrypt
+import json
 
 # Make sure you have loaded your environment variables (e.g., from .env)
 # from dotenv import load_dotenv
