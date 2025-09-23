@@ -5,7 +5,7 @@ export default function Index() {
   return (
      <View style={styles.container}>
       <Text style={styles.header}>Ann Dhan Chatbot</Text>
-      <ChatbotScreen /> {/* 👈 Render the chatbot component here */}
+      <ChatbotScreen /> 
     </View>
   );
 }
