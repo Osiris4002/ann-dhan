@@ -11,15 +11,18 @@ export default function RootLayout() {
 
     useEffect(() => {
         const checkAuthState = async () => {
-            // Check for offline mode first
+            // Check for the offline flag first.
             const isOffline = await AsyncStorage.getItem('isOfflineMode');
+            
+            // If the last session was offline, force a re-login.
             if (isOffline === 'true') {
-                setUser({ uid: 'offline_user' });
+                setUser(null);
+                await AsyncStorage.removeItem('isOfflineMode'); // Remove the flag
                 setInitializing(false);
                 return;
             }
 
-            // If not offline, check for Firebase authentication
+            // If not offline, check for Firebase authentication.
             const subscriber = onAuthStateChanged(auth, firebaseUser => {
                 setUser(firebaseUser);
                 if (initializing) setInitializing(false);
@@ -28,7 +31,7 @@ export default function RootLayout() {
         };
 
         checkAuthState();
-    }, []);
+    }, [auth]); // Dependency on 'auth' is crucial
 
     if (initializing) {
         return (
@@ -42,10 +45,10 @@ export default function RootLayout() {
     return (
         <Stack>
             {user ? (
-                // If user is logged in or in offline mode, show the main app tabs
+                // If user is logged in, show the main app tabs.
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             ) : (
-                // Otherwise, show the login screen
+                // Otherwise, show the login screen.
                 <Stack.Screen name="loginscreen" options={{ headerShown: false }} />
             )}
         </Stack>

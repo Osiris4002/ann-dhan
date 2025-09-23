@@ -11,7 +11,7 @@ const TEST_USERS = {
 };
 
 // Replace with your backend URL
-const AUTH_API_URL = "https://your-auth-backend.onrender.com/api/auth";
+const AUTH_API_URL = "https://ann-dhan-api.onrender.com/api/auth";
 
 export default function LoginScreen() {
     const [phoneNumber, setPhoneNumber] = useState<string>('');
@@ -50,12 +50,20 @@ export default function LoginScreen() {
         } else {
             Alert.alert('Authentication Failed', data.message);
         }
-    } catch (error) {
-        console.error(error);
+    } 
+    catch (error: unknown) {
+    console.error(error); // Keep this to log the full error object for detailed debugging
+
+    // Check if the error is a standard Error object to access its message
+    if (error instanceof Error) {
+        Alert.alert('Authentication Error', error.message);
+    } else {
+        // Fallback for unexpected errors that are not standard Error objects
         Alert.alert('Authentication Error', 'An unexpected error occurred.');
-    } finally {
-        setLoading(false);
     }
+} finally {
+    setLoading(false);
+}
     };
 
     const handleOfflineMode = async () => {
@@ -79,10 +87,10 @@ export default function LoginScreen() {
             />
             <TextInput
                 style={styles.input}
-                placeholder="4-digit PIN"
+                placeholder="6-digit PIN"
                 keyboardType="numeric"
                 secureTextEntry
-                maxLength={4}
+                maxLength={6}
                 value={pin}
                 onChangeText={setPin}
             />

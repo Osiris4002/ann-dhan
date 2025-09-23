@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addDoc, collection, getDocs, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { auth, db } from '../../../firebaseConfig';
+import { Message, Profile } from '../../../types'; // Adjust path as needed
 import rules from '../data/rules.json';
-import { auth, db } from '../firebaseConfig';
-import { Message, Profile } from '../types'; // Adjust path as needed
 
 // TODO: Replace with your backend URL
 const BACKEND_URL = 'https://your-render-app.onrender.com/api/chat';

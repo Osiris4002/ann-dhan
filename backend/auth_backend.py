@@ -1,17 +1,21 @@
-# backend/auth_backend.py
 import os
-from flask import Flask, request, jsonify
-from dotenv import load_dotenv
-import firebase_admin
 from firebase_admin import credentials, auth, firestore
+from flask import Flask, request, jsonify
 import bcrypt
 
-# Load environment variables
-load_dotenv()
+# Make sure you have loaded your environment variables (e.g., from .env)
+# from dotenv import load_dotenv
+# load_dotenv()
 
-# Initialize Firebase Admin SDK
-# Make sure your service account JSON file is in the same directory
-cred = credentials.Certificate("serviceAccountKey.json")
+# Load the service account key from an environment variable
+cred_json_string = os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY")
+if not cred_json_string:
+    raise ValueError("FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set.")
+
+# Parse the JSON string into a dictionary
+cred_dict = json.loads(cred_json_string)
+cred = credentials.Certificate(cred_dict)
+
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
