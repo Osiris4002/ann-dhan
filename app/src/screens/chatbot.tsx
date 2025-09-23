@@ -6,7 +6,7 @@ import { auth, db } from '../../../firebaseConfig'; // Your Firebase config
 import { Message, Profile } from '../../../types'; // Your types
 import rules from '../data/rules.json'; // Your offline rules
 
-const CHATBOT_API_URL = "https://ann-dhan-api.onrender.com/api/auth"; // 👈 Your live backend URL
+const CHATBOT_API_URL = "https://ann-dhan-api.onrender.com/api/chat"; // 👈 Your live backend URL
 
 export default function ChatbotScreen() {
   const [messages, setMessages] = useState<Message[]>([]);

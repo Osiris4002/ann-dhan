@@ -73,7 +73,7 @@ def handle_auth():
         return jsonify({'message': 'Authentication failed'}), 500
     
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 SYSTEM_PROMPT = """
 You are Ann Dhan, a helpful Indian agriculture assistant for smallholder farmers.
