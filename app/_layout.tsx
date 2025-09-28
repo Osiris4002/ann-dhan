@@ -11,27 +11,34 @@ export default function RootLayout() {
 
     useEffect(() => {
         const checkAuthState = async () => {
-            // Check for the offline flag first.
-            const isOffline = await AsyncStorage.getItem('isOfflineMode');
-            
-            // If the last session was offline, force a re-login.
-            if (isOffline === 'true') {
-                setUser(null);
-                await AsyncStorage.removeItem('isOfflineMode'); // Remove the flag
+            // Check for Firebase authentication first.
+            const firebaseUser = auth.currentUser;
+            if (firebaseUser) {
+                setUser(firebaseUser);
                 setInitializing(false);
                 return;
             }
 
-            // If not offline, check for Firebase authentication.
-            const subscriber = onAuthStateChanged(auth, firebaseUser => {
-                setUser(firebaseUser);
-                if (initializing) setInitializing(false);
-            });
-            return () => subscriber();
+            // If no Firebase user, check for offline mode.
+            const isOffline = await AsyncStorage.getItem('isOfflineMode');
+            if (isOffline === 'true') {
+                setUser({ uid: 'offline_user' }); // Create a dummy user object
+                setInitializing(false);
+            } else {
+                setUser(null);
+                setInitializing(false);
+            }
         };
 
+        const unsubscribe = onAuthStateChanged(auth, firebaseUser => {
+            setUser(firebaseUser);
+            if (initializing) setInitializing(false);
+        });
+
+        // Run the initial check and keep the subscriber for real-time changes.
         checkAuthState();
-    }, [auth]); // Dependency on 'auth' is crucial
+        return () => unsubscribe();
+    }, [auth]);
 
     if (initializing) {
         return (
@@ -45,7 +52,7 @@ export default function RootLayout() {
     return (
         <Stack>
             {user ? (
-                // If user is logged in, show the main app tabs.
+                // If user is logged in or in offline mode, show the main app tabs.
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             ) : (
                 // Otherwise, show the login screen.

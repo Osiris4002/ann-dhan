@@ -4,7 +4,7 @@ import ChatbotScreen from "../src/screens/chatbot";
 export default function Index() {
   return (
      <View style={styles.container}>
-      <Text style={styles.header}>Ann Dhan Chatbot</Text>
+      <Text style={styles.header}>Ann Dhan - Aapka Sathi</Text>
       <ChatbotScreen /> 
     </View>
   );

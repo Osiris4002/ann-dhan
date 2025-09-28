@@ -11,17 +11,17 @@ const CHATBOT_API_URL = "https://ann-dhan-api.onrender.com/api/chat"; // 👈 Yo
 export default function ChatbotScreen() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(true); // 👈 Set to true on initial load
+    const [loading, setLoading] = useState<boolean>(true); // 👈 Corrected
+    const [sending, setSending] = useState<boolean>(false); // 👈 New state for sending
     const flatListRef = useRef<FlatList<Message>>(null);
     const [profile, setProfile] = useState<Profile>({});
+    
 
     useEffect(() => {
         const loadData = async () => {
-            // Load user profile from local storage for crop/language context
             const rawProfile = await AsyncStorage.getItem('profile');
             if (rawProfile) setProfile(JSON.parse(rawProfile));
 
-            // Load chat history from Firebase
             const user = auth.currentUser;
             if (user) {
                 const q = query(collection(db, 'users', user.uid, 'chats'), orderBy('ts'));
@@ -33,7 +33,7 @@ export default function ChatbotScreen() {
                     pushBot("Namaste 🙏! I am Ann Dhan. Ask me about your crop, irrigation, or pests.");
                 }
             }
-            setLoading(false); // 👈 Set to false after all data is loaded
+            setLoading(false);
         };
         loadData();
     }, []);
@@ -44,6 +44,8 @@ export default function ChatbotScreen() {
         await saveToFirestore(msg);
         scrollToBottom();
     };
+
+    
 
     const pushUser = async (text: string) => {
         const msg: Message = { id: Date.now().toString(), from: 'user', text, ts: Date.now() };
@@ -82,7 +84,7 @@ export default function ChatbotScreen() {
             return;
         }
 
-        setLoading(true);
+        setSending(true);
         try {
             const response = await fetch(CHATBOT_API_URL, {
                 method: 'POST',
@@ -95,7 +97,7 @@ export default function ChatbotScreen() {
             console.error('Chat error:', e);
             pushBot('Network error, please try again later 🙏');
         } finally {
-            setLoading(false);
+            setSending(false);
         }
     };
 
@@ -116,13 +118,13 @@ export default function ChatbotScreen() {
         </View>
     );
 
-    // Initial loading indicator
     if (loading) {
         return <ActivityIndicator style={styles.loadingIndicator} size="large" color="green" />;
     }
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+            <Text>{rules.global.hello}</Text>
             <FlatList
                 ref={flatListRef}
                 data={messages}
@@ -136,8 +138,12 @@ export default function ChatbotScreen() {
                     onChangeText={setInput}
                     style={styles.textInput}
                 />
-                <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-                    <Text style={styles.sendButtonText}>Send</Text>
+                <TouchableOpacity onPress={sendMessage} style={styles.sendButton} disabled={sending}>
+                    {sending ? (
+                        <ActivityIndicator size="small" color="white" />
+                    ) : (
+                        <Text style={styles.sendButtonText}>Send</Text>
+                    )}
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
